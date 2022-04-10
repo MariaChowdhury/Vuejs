@@ -67,12 +67,12 @@ export default{
       },
     
     calculate(){
-      let year = Number(this.form.year)
-      let compound = Number(this.form.compound)
-      let rate = Number(this.form.rate)
+      let year = parseFloat(this.form.year)
+      let compound = parseFloat(this.form.compound)
+      let rate = parseFloat(this.form.rate)/(100*compound)
       let principal = Number(this.form.principal)
       let exponent = year*compound
-      let answer = principal*(1+rate/(compound*100)) * year
+      let answer = principal*((1+rate/compound) ^ exponent)
       this.form.answer = answer.toFixed(2)
       this.form.interest = (answer - principal).toFixed(2)
     }
