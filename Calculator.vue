@@ -4,6 +4,7 @@
 
 <template>
   <div class="calculator">
+     
      <div > Principal (P): $</div>
      <input :value="form.principal" @change="update_principal" type="number" class="form-control" name="principal" id="principal" placeholder="principal">
 
@@ -18,8 +19,11 @@
 
      <button @click="calculate()" class="display" > Calculate</button>
      <div>Answer:</div>
-     <input :value="form.result" @change="update" type="number" class="form-control" name="result" id="result" placeholder="Answer">
-
+     <input :value="form.answer"  type="number" class="form-control" name="answer" id="answer" placeholder="Answer">
+     <div>Interest:</div>
+     <input :value="form.interest"  type="number" class="form-control" name="interest" id="interest" placeholder="interest">
+      
+     <button @click="clear()" class="display" > Clear</button>
   </div>
  
   
@@ -34,14 +38,20 @@ export default{
         principal: 0,
         rate: 0,
         compound: 0,
-        year: 0
+        year: 0,
+        interest: 0
       }
       
     }
   },
   methods:{
     clear() {
-       this.current='';
+        this.form.principal = principal
+        this.form.rate = rate
+        this.form.compound = compound
+        this.form.year = year
+        this.form.answer = answer
+        this.form.interest = interest
     },
       update_principal(event) {
         this.form.principal = event.target.value 
@@ -57,16 +67,20 @@ export default{
       },
     
     calculate(){
-      this.form.result=Number(this.form.principal)+
-      Number(this.form.rate)+Number(this.form.compound)+Number(this.form.year)
-      
+      let year = Number(this.form.year)
+      let compound = Number(this.form.compound)
+      let rate = Number(this.form.rate)
+      let principal = Number(this.form.principal)
+      let exponent = year*compound
+      let answer = principal*(1+rate/(compound*100)) * year
+      this.form.answer = answer.toFixed(2)
+      this.form.interest = (answer - principal).toFixed(2)
     }
     
   }
 }
   
 </script>
-
 <style scoped>
 .calculator{
   width: 400px;
@@ -81,5 +95,4 @@ export default{
   grid-column: 2;
   margin: 5px;
 }
-
 </style>
